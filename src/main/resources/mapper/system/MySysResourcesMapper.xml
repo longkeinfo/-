@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.longke.manager.project.dao.system.MySysResourcesMapper">
+	<resultMap id="BaseResultMap" type="com.longke.manager.project.entity.generator.SysResources">
+		<!-- WARNING - @mbg.generated -->
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="resUrl" jdbcType="VARCHAR" property="resurl" />
+		<result column="type" jdbcType="INTEGER" property="type" />
+		<result column="parentId" jdbcType="INTEGER" property="parentid" />
+		<result column="sort" jdbcType="INTEGER" property="sort" />
+	</resultMap>
+
+	<select id="queryAll" resultType="com.longke.manager.project.entity.generator.SysResources">
+		SELECT id,name,parentId,resUrl,type,sort
+		FROM sys_resources
+		ORDER BY sort ASC
+	</select>
+
+	<select id="loadUserResources" parameterType="java.util.HashMap" resultType="com.longke.manager.project.entity.generator.SysResources">
+		SELECT re.id,re.name,re.parentId,re.resUrl
+		FROM sys_resources re LEFT JOIN sys_role_resources rr
+		ON re.id = rr.resourcesId
+		LEFT JOIN sys_user_role ur
+		ON rr.roleId =ur.roleId
+		WHERE ur.userId=#{userid}
+		<if test="type != null">
+			AND re.type= #{type}
+		</if>
+		GROUP BY re.id
+		ORDER BY re.sort ASC
+	</select>
+
+	<select id="queryResourcesListWithSelected" parameterType="int" resultType="com.longke.manager.project.entity.system.MySysResources">
+		SELECT re.id,re.name,re.parentId,re.resUrl,re.type,
+		(CASE WHEN EXISTS(SELECT 1
+		FROM sys_role_resources rr WHERE rr.resourcesId=re.id AND rr.roleId=#{rid})
+		THEN 'true' ELSE 'false' END) AS checked
+		FROM sys_resources re
+		WHERE re.parentId !=0
+		ORDER BY re.sort ASC
+	</select>
+</mapper>

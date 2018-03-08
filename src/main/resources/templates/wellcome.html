@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
+<link rel="stylesheet" th:href="@{/css/matrix-style.css}" />
+<link rel="stylesheet" th:href="@{/css/matrix-media.css}" />
+<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+<title>控制台</title>
+</head>
+<body>
+	<!--Header-part-->
+	<div id="header">
+		<h1>
+			<a href="dashboard.html">Matrix Admin</a>
+		</h1>
+	</div>
+	<!--close-Header-part-->
+
+	<!--top-Header-menu-->
+	<div th:include="common/top :: top"></div>
+	<div th:include="common/menu :: menu"></div>
+
+	<div id="content">
+		<div id="content-header">
+			<div id="breadcrumb">
+				<a href="javascript:void(0);" title="Go to Home" class="tip-bottom">
+					<i class="icon-home"></i>
+					Home
+				</a>
+				<a href="javascript:void(0);" class="current">控制台</a>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<hr />
+			<div class="row-fluid">
+				<div class="span12">
+					<table width="98%" align="center" class="table table-border table-bordered table-hover table-bg table-sort dataTable no-footer">
+						<tr>
+							<td>ID：</td>
+							<td>姓名：</td>
+						</tr>
+						<tr>
+							<td>工号：</td>
+							<td>登录IP：</td>
+						</tr>
+						<tr>
+							<fmt:formatDate value="${user.lastLoginTime }" var="lastLoginTime" pattern="yyyy-MM-dd HH:mm:ss" />
+							<td>上次登录时间：</td>
+							<td>上次登录IP：</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Footer-part-->
+	<div class="row-fluid">
+		<div id="footer" class="span12">
+			2017 &copy; yqj
+			<a href="">Themedesigner.in</a>
+		</div>
+	</div>
+	<!--end-Footer-part-->
+	<script type="text/javascript" th:src="@{/js/jquery-1.11.2.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}" th:sr></script>
+	<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/js/wellcome.js}"></script>
+</body>
+</html>
